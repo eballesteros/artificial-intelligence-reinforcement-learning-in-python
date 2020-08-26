@@ -12,6 +12,6 @@ class Strategy(ABC):
     def choose(self, *args, **kargs):
         pass
     
-    @abstractstaticmethod
-    def init_bandit(*args, **kargs):
+    @abstractmethod
+    def init_bandit(self, *args, **kargs):
         pass

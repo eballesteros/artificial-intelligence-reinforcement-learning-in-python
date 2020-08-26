@@ -14,5 +14,5 @@ class Greedy(Strategy):
     def choose(self, bandit_list):
         return self._pick_best_bandit(bandit_list), False
 
-    def init_bandit(true_p):
+    def init_bandit(self, true_p):
         return Bandit(true_p, initial_p_estimate=0)
