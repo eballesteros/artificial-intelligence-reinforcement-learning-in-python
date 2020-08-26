@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 from tqdm import tqdm
 
-from bandit_strategies import Greedy, EpsilonGreedy, DecayingEpsilonGreedy, OptimisticInitialValues, UCB1
+from bandit_strategies import Greedy, EpsilonGreedy, DecayingEpsilonGreedy, OptimisticInitialValues, UCB1, ThomsonSampling
 
 N_TRIALS = int(1e5)
 BANDIT_PROBABILITIES = [.2, .5, .75]
@@ -52,7 +52,10 @@ if __name__ == '__main__':
     run_experiment(EpsilonGreedy(epsilon=.1))
     run_experiment(DecayingEpsilonGreedy(initial_epsilon=.1, decay_factor=.0001))
     run_experiment(OptimisticInitialValues(initial_value=5.))
-    run_experiment(UCB1(trial_n_offset=len(BANDIT_PROBABILITIES)))
+    run_experiment(UCB1(
+        trial_n_offset=len(BANDIT_PROBABILITIES) # equivalent to running each bandit once before going into main loop
+        ))
+    run_experiment(ThomsonSampling())
 
     plt.legend()
     plt.show()
