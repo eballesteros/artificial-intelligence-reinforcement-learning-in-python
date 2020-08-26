@@ -1,6 +1,18 @@
 import numpy as np
 
-class EpsilonGreedy:
+class Greedy:
+    def __str__(self):
+        return 'Greedy'
+
+    @staticmethod
+    def _pick_best_bandit(bandit_list):
+        return bandit_list[np.argmax([b.p_estimate for b in bandit_list])]
+
+    def choose(self, bandit_list):
+        return self._pick_best_bandit(bandit_list), False
+
+
+class EpsilonGreedy(Greedy):
     def __init__(self, epsilon):
         '''
         :param epsilon: float; Chance of exploring (0 to 1)
@@ -15,10 +27,6 @@ class EpsilonGreedy:
     def _pick_random_bandit(bandit_list):
         return np.random.choice(bandit_list)
 
-    @staticmethod
-    def _pick_best_bandit(bandit_list):
-        return bandit_list[np.argmax([b.p_estimate for b in bandit_list])]
-
     def choose(self, bandit_list):
         if np.random.rand() < self._epsilon: #explore
             return self._pick_random_bandit(bandit_list), True
@@ -26,7 +34,7 @@ class EpsilonGreedy:
             return self._pick_best_bandit(bandit_list), False
 
 
-class DecayingEpsilonGreedy:
+class DecayingEpsilonGreedy(Greedy):
     def __init__(self, initial_epsilon, decay_factor):
         '''
         Exponentially decaying EpsilonGreedy
@@ -46,10 +54,6 @@ class DecayingEpsilonGreedy:
     @staticmethod
     def _pick_random_bandit(bandit_list):
         return np.random.choice(bandit_list)
-
-    @staticmethod
-    def _pick_best_bandit(bandit_list):
-        return bandit_list[np.argmax([b.p_estimate for b in bandit_list])]
 
     def choose(self, bandit_list):
         epsilon = self._initial_epsilon * (1 - self._decay_factor) ** self._time_steps
