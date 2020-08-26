@@ -1,16 +1,6 @@
 import numpy as np
 
-class Greedy:
-    def __str__(self):
-        return 'Greedy'
-
-    @staticmethod
-    def _pick_best_bandit(bandit_list):
-        return bandit_list[np.argmax([b.p_estimate for b in bandit_list])]
-
-    def choose(self, bandit_list):
-        return self._pick_best_bandit(bandit_list), False
-
+from .greedy import Greedy
 
 class EpsilonGreedy(Greedy):
     def __init__(self, epsilon):

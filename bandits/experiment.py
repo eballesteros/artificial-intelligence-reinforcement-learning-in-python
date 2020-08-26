@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 
 from tqdm import tqdm
 
-from bandit import Bandit
-from strategies import Greedy, EpsilonGreedy, DecayingEpsilonGreedy
+from bandit_strategies.bandit import Bandit
+from bandit_strategies.strategies import Greedy, EpsilonGreedy, DecayingEpsilonGreedy
 
 N_TRIALS = int(1e5)
 BANDIT_PROBABILITIES = [.2, .5, .75]
