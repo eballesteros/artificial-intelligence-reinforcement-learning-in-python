@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 from tqdm import tqdm
 
-from bandit_strategies import Greedy, EpsilonGreedy, DecayingEpsilonGreedy, OptimisticInitialValues
+from bandit_strategies import Greedy, EpsilonGreedy, DecayingEpsilonGreedy, OptimisticInitialValues, UCB1
 
 N_TRIALS = int(1e5)
 BANDIT_PROBABILITIES = [.2, .5, .75]
@@ -23,8 +23,8 @@ def run_experiment(strat):
     bandits = [strat.init_bandit(p) for p in BANDIT_PROBABILITIES]
 
     # main loop
-    for _ in tqdm(range(N_TRIALS)):
-        chosen_bandit, exploring = strat.choose(bandits)
+    for trail_n in tqdm(range(N_TRIALS)):
+        chosen_bandit, exploring = strat.choose(bandits, trail_n)
 
         # update recorders
         rewards.append(chosen_bandit.pull())
@@ -52,6 +52,7 @@ if __name__ == '__main__':
     run_experiment(EpsilonGreedy(epsilon=.1))
     run_experiment(DecayingEpsilonGreedy(initial_epsilon=.1, decay_factor=.0001))
     run_experiment(OptimisticInitialValues(initial_value=5.))
+    run_experiment(UCB1(trial_n_offset=len(BANDIT_PROBABILITIES)))
 
     plt.legend()
     plt.show()

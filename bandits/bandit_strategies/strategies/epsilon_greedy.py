@@ -17,7 +17,7 @@ class EpsilonGreedy(Greedy):
     def _pick_random_bandit(bandit_list):
         return np.random.choice(bandit_list)
 
-    def choose(self, bandit_list):
+    def choose(self, bandit_list, *args, **kargs):
         if np.random.rand() < self._epsilon: #explore
             return self._pick_random_bandit(bandit_list), True
         else: #exploit
@@ -45,7 +45,7 @@ class DecayingEpsilonGreedy(Greedy):
     def _pick_random_bandit(bandit_list):
         return np.random.choice(bandit_list)
 
-    def choose(self, bandit_list):
+    def choose(self, bandit_list, *args, **kargs):
         epsilon = self._initial_epsilon * (1 - self._decay_factor) ** self._time_steps
         self._time_steps += 1
 
